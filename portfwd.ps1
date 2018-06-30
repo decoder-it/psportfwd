@@ -1,4 +1,5 @@
 $mycode = @"
+//based on : https://blog.brunogarcia.com/2012/10/simple-tcp-forwarder-in-c.html
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -7,7 +8,7 @@ using System.Net.Sockets;
     public class TcpForwarder
     {
         private readonly Socket _mainSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
- 
+        private const int MAX_BYTES=8192;
        public static void StartPortFwd(string localhost, string localport, string remotehost, string remoteport)
 		{
 			new TcpForwarder().Start(
@@ -66,12 +67,13 @@ using System.Net.Sockets;
             {
                 SourceSocket = source;
                 DestinationSocket = destination;
-                Buffer = new byte[8192];
+                Buffer = new byte[MAX_BYTES];
             }
         }
     }
 
 "@
 Add-Type -TypeDefinition $mycode
-#.\portwd.ps1 127.0.0.1 8080 192.168.1.100 80
+#.\portfwd.ps1 127.0.0.1 8080 192.168.1.100 80
+# launchable by stadnard user
 [TcpForwarder]::StartPortFwd($args[0],$args[1],$args[2],$args[3])
