@@ -75,5 +75,5 @@ using System.Net.Sockets;
 "@
 Add-Type -TypeDefinition $mycode
 #.\portfwd.ps1 127.0.0.1 8080 192.168.1.100 80
-# launchable by stadnard user
+# launchable by standard
 [TcpForwarder]::StartPortFwd($args[0],$args[1],$args[2],$args[3])
